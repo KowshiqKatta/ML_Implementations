@@ -42,6 +42,29 @@ lower_bound = Q1 - 1.5 * IQR
 upper_bound = Q3 + 1.5 * IQR
 
 df['outlier'] = (df['Value'] < lower_bound) | (df['Value'] > upper_bound)
+print(df)   
+
+df_clean = df[df['outlier'] == False]
+print(df_clean)
+
+# percentile method
+
+data = np.concatenate([np.random.normal(0, 1, 90), np.array([10, 12, 15, -8, -10])])
+
+df = pd.DataFrame(data, columns=['Value'])
+
+print(df)
+
+lower_bound = np.percentile(df['Value'], 5)
+upper_bound = np.percentile(df['Value'], 95)
+
+lower_bound1 = df['Value'].quantile(0.05)
+upper_bound1 = df['Value'].quantile(0.95)
+
+print(lower_bound, upper_bound)
+print(lower_bound1, upper_bound1)
+
+df['outlier'] = (df['Value'] < lower_bound) | (df['Value'] > upper_bound)
 print(df)
 
 df_clean = df[df['outlier'] == False]
