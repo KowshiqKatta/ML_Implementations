@@ -23,3 +23,15 @@ print(one_hot_encoded)
 encoded_df = pd.DataFrame(one_hot_encoded, columns=encoder.get_feature_names_out(["Color"]))
 
 print(encoded_df)
+
+# label encoding using scikit-learn
+
+from sklearn.preprocessing import LabelEncoder
+
+encoder = LabelEncoder()
+
+print(df)
+
+df["Color_encoded"] = encoder.fit_transform(df["Color"])
+
+print(df)
