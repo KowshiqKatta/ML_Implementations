@@ -35,3 +35,29 @@ print(df)
 df["Color_encoded"] = encoder.fit_transform(df["Color"])
 
 print(df)
+
+# ordinal encoding using scikit-learn
+
+data = {
+    'color': ['red', 'blue', 'green', 'blue', 'red'],
+    'size': ['S', 'M', 'L', 'M', 'S'],
+    'price': [10, 20, 30, 20, 10]
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+
+from sklearn.preprocessing import OrdinalEncoder
+
+size_categories = [['S', 'M', 'L']] #increasing order of size
+
+ordinal_encoder = OrdinalEncoder(categories=size_categories)
+
+size_values = df[["size"]].values # creating a numpy error as it is needed for the fit_transform method of the ordinal encoder
+
+print(size_values)
+
+df["size_encoded"] = ordinal_encoder.fit_transform(size_values)
+
+print(df)
