@@ -69,3 +69,20 @@ print(df)
 
 df_clean = df[df['outlier'] == False]
 print(df_clean)
+
+# winsorization method
+
+data = np.concatenate([np.random.normal(0, 1, 50), np.array([10, 12, 15, -8, -10])])
+
+df = pd.DataFrame(data, columns=['Value'])
+
+print(df)
+
+lower_bound = np.percentile(df['Value'], 5)
+upper_bound = np.percentile(df['Value'], 95)
+
+print(lower_bound, upper_bound)
+
+df['winsorized'] = df['Value'].clip(lower_bound, upper_bound)
+
+print(df)
