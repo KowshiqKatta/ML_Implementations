@@ -20,3 +20,10 @@ print(f"Skewness of 'value' column: {skew(df['value'])}")
 df['log_transformed_value'] = np.log(df['value'] + 1) # Adding 1 to avoid log(0)
 
 print(f"Skewness of 'log_transformed_value' column: {skew(df['log_transformed_value'])}")
+
+# sqrt transformation
+
+df['sqrt_transformed_value'] = np.sqrt(df['value'])
+
+print(f"Skewness of 'sqrt_transformed_value' column: {skew(df['sqrt_transformed_value'])}")
+
