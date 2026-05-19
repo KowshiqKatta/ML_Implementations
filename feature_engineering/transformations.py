@@ -27,3 +27,16 @@ df['sqrt_transformed_value'] = np.sqrt(df['value'])
 
 print(f"Skewness of 'sqrt_transformed_value' column: {skew(df['sqrt_transformed_value'])}")
 
+# reciprocal transformation
+
+data = np.random.exponential(scale=2.0, size=1000)
+
+data = 50 - data
+
+df = pd.DataFrame(data, columns = ['value'])
+
+print(skew(df['value']))
+
+df['reciprocal_transformed_value'] = 1 / (df['value'] + 1) # Adding 1 to avoid division by zero
+
+print(f"Skewness of 'reciprocal_transformed_value' column: {skew(df['reciprocal_transformed_value'])}")
