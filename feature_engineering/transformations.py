@@ -40,3 +40,38 @@ print(skew(df['value']))
 df['reciprocal_transformed_value'] = 1 / (df['value'] + 1) # Adding 1 to avoid division by zero
 
 print(f"Skewness of 'reciprocal_transformed_value' column: {skew(df['reciprocal_transformed_value'])}")
+
+
+# Box-Cox transformation
+
+np.random.seed(0)
+
+data = {
+    'A': np.random.exponential(scale=2.0, size=1000),
+    'B': np.random.chisquare(df=2, size=1000)
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+
+print(f"Skewness of 'A' column: {skew(df['A'])}")   
+print(f"Skewness of 'B' column: {skew(df['B'])}")
+
+from scipy.stats import boxcox
+
+df["Transformed_A"], lambda_value_a = boxcox(df["A"]) 
+
+print(f"Lambda for 'A': {lambda_value_a}")
+print(f"Skewness of 'Transformed_A' column: {skew(df['Transformed_A'])}")
+
+df["Transformed_B"], lambda_value_b = boxcox(df["B"])
+
+print(f"Lambda for 'B': {lambda_value_b}")
+print(f"Skewness of 'Transformed_B' column: {skew(df['Transformed_B'])}")
+
+
+
+
+
+
