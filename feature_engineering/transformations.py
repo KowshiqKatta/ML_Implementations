@@ -70,6 +70,35 @@ df["Transformed_B"], lambda_value_b = boxcox(df["B"])
 print(f"Lambda for 'B': {lambda_value_b}")
 print(f"Skewness of 'Transformed_B' column: {skew(df['Transformed_B'])}")
 
+# Yeo-Johnson transformation
+
+np.random.seed(0)
+
+data = {
+    'A': np.random.exponential(scale=2.0, size=1000),
+    'B': np.random.chisquare(df=2, size=1000)
+}
+
+df = pd.DataFrame(data)
+print(df)
+
+print(f"Skewness of 'A' column: {skew(df['A'])}")
+print(f"Skewness of 'B' column: {skew(df['B'])}")
+
+from scipy.stats import yeojohnson
+
+df["Transformed_A"], lambda_value_a = yeojohnson(df["A"])
+
+print(f"Lambda for 'A': {lambda_value_a}")
+print(f"Skewness of 'Transformed_A' column: {skew(df['Transformed_A'])}")
+
+df["Transformed_B"], lambda_value_b = yeojohnson(df["B"])
+
+print(f"Lambda for 'B': {lambda_value_b}")
+print(f"Skewness of 'Transformed_B' column: {skew(df['Transformed_B'])}")
+
+
+ 
 
 
 
