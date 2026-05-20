@@ -98,3 +98,45 @@ print(df_undersampled['class'].value_counts())
 df_undersampled = df_undersampled.sample(frac=1, random_state=42).reset_index(drop=True)
 
 print(df_undersampled.head())
+
+# Hybrid sampling
+
+class0_data = np.random.randn(900, 5)
+class0_df = pd.DataFrame(class0_data, columns=[f'feature_{i}' for i in range(5)])
+class0_df['class'] = 0
+
+class1_data = np.random.randn(100, 5)
+class1_df = pd.DataFrame(class1_data, columns=[f'feature_{i}' for i in range(5)])
+class1_df['class'] = 1
+
+df = pd.concat([class0_df, class1_df], ignore_index=True)
+
+print(df.head())
+
+print(df['class'].value_counts())
+
+from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import RandomUnderSampler
+
+undersample_strategy = {0: 300}
+undersampler = RandomUnderSampler(sampling_strategy=undersample_strategy, random_state=0)
+
+X_resampled, y_resampled = undersampler.fit_resample(df.drop('class', axis=1), df['class'])
+
+print(X_resampled.shape)
+print(y_resampled.shape)
+
+smote = SMOTE(random_state=0)
+X_resampled, y_resampled = smote.fit_resample(X_resampled, y_resampled)
+
+print(X_resampled.shape)
+print(y_resampled.shape)
+
+df_resampled = pd.DataFrame(X_resampled, columns=[f'feature_{i}' for i in range(5)])
+df_resampled['class'] = y_resampled
+
+print(df_resampled['class'].value_counts())
+
+df_resampled = df_resampled.sample(frac=1, random_state=0).reset_index(drop=True)
+
+print(df_resampled.head())
