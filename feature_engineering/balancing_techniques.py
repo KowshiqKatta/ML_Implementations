@@ -65,3 +65,36 @@ df_resampled = pd.DataFrame(X_resampled, columns=feature_names)
 df_resampled['class'] = y_resampled
 
 print(df_resampled['class'].value_counts())
+
+# Under-sampling: Random Undersampling
+
+class0_data = np.random.randn(900, 5)
+class0_df = pd.DataFrame(class0_data, columns=[f'feature_{i}' for i in range(5)])
+class0_df['class'] = 0
+
+class1_data = np.random.randn(400, 5)
+class1_df = pd.DataFrame(class1_data, columns=[f'feature_{i}' for i in range(5)])
+class1_df['class'] = 1
+
+df = pd.concat([class0_df, class1_df], ignore_index=True)
+
+print(df.head())
+
+print(df['class'].value_counts())
+
+class_0 = df[df['class'] == 0]
+class_1 = df[df['class'] == 1]
+
+print(class_0.shape)
+print(class_1.shape)
+
+undersampled_class_0 = class_0.sample(n=400, random_state=42)
+print(undersampled_class_0.shape)
+
+df_undersampled = pd.concat([undersampled_class_0, class_1], ignore_index=True)
+
+print(df_undersampled['class'].value_counts())
+
+df_undersampled = df_undersampled.sample(frac=1, random_state=42).reset_index(drop=True)
+
+print(df_undersampled.head())
