@@ -65,3 +65,4 @@ df['Age_binned'] = pd.cut(df['Age'], bins=bins, labels=labels)
 
 print(df.head())
 
+print(df['Age_binned'].value_counts())
