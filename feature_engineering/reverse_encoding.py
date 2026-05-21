@@ -45,3 +45,23 @@ kbins = KBinsDiscretizer(n_bins=4, encode='ordinal', strategy='quantile')
 df['Quantile_Binned'] = kbins.fit_transform(df[['Value']])
 
 print(df.head())
+
+
+# custom binning
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Heidi', 'Ivan', 'Judy'],
+    'Age': [25, 35, 45, 55, 65, 75, 85, 95, 105, 115]
+}
+
+df = pd.DataFrame(data)
+
+print(df.head())
+
+bins = [0, 18, 30, 40, 50, float('inf')]
+labels = ['Child', 'Young Adult', 'Adult', 'Middle Age', 'Senior']
+
+df['Age_binned'] = pd.cut(df['Age'], bins=bins, labels=labels)
+
+print(df.head())
+
