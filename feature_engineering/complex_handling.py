@@ -35,3 +35,17 @@ df['second'] = df['timestamp'].dt.second
 
 print(df.head())
 
+# handling mixed features
+
+data = {
+    'Mixed_Feature': ['B123', 'C124', 'A120', 'B125', 'C126']
+}
+
+df = pd.DataFrame(data)
+
+print(df.head())
+
+df['Category'] = df['Mixed_Feature'].str[0] # extract the first character as category
+df['Numerical'] = df['Mixed_Feature'].str[1:].astype(int) # extract the numeric part and convert to int
+
+print(df.head())
