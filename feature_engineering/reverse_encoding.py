@@ -28,3 +28,20 @@ df['Age_binned'] = discretizer.fit_transform(df[['Age']])
 print(df.head())
 
 sns.countplot(x = df['Age_binned'], data = df)
+
+# Quantile binning
+
+np.random.seed(42)
+data = np.random.randint(1, 100, size = 200).reshape(-1, 1)
+df = pd.DataFrame(data, columns=['Value'])
+
+print(df.head())
+
+print(df["Value"].value_counts())
+
+from sklearn.preprocessing import KBinsDiscretizer
+kbins = KBinsDiscretizer(n_bins=4, encode='ordinal', strategy='quantile')
+
+df['Quantile_Binned'] = kbins.fit_transform(df[['Value']])
+
+print(df.head())
