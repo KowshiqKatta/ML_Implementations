@@ -15,3 +15,9 @@ imputer = SimpleImputer(strategy='mean')
 df['transformed_value'] = imputer.fit_transform(df[['Value']])
 
 print(df)
+
+# median imputation
+imputer = SimpleImputer(strategy='median')
+df['transformed_value'] = imputer.fit_transform(df[['Value']])
+
+print(df)
