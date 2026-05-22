@@ -106,3 +106,26 @@ for idx in missing_indices:
     df.loc[idx, 'Fruit'] = imputed_fruit
 
 print(df)
+
+# multivariate imputation (MICE)
+
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+data = {
+    'A': [1, 2, np.nan, 4, 5],
+    'B': [3, np.nan, 5, np.nan, 7],
+    'C': [np.nan, 2, 3, 4, np.nan],
+    'D': [1, np.nan, 3, np.nan, 5]
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+
+mice_imputer = IterativeImputer()
+
+imputed_data = mice_imputer.fit_transform(df)
+
+df_imputed = pd.DataFrame(imputed_data, columns=df.columns)
+print(df_imputed)
