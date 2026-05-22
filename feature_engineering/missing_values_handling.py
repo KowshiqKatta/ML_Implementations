@@ -129,3 +129,14 @@ imputed_data = mice_imputer.fit_transform(df)
 
 df_imputed = pd.DataFrame(imputed_data, columns=df.columns)
 print(df_imputed)
+
+# KNN imputation
+
+from sklearn.impute import KNNImputer
+
+knn_imputer = KNNImputer(n_neighbors=2)
+
+imputed_data = knn_imputer.fit_transform(df)
+
+df_imputed = pd.DataFrame(imputed_data, columns=df.columns)
+print(df_imputed)
