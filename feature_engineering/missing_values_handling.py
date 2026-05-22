@@ -44,3 +44,7 @@ print(df)
 df['transformed_value'] = df['Value'].bfill()
 print(df)
 
+# interpolation imputation
+
+df['transformed_value'] = df['Value'].interpolate(method='linear')
+print(df)
