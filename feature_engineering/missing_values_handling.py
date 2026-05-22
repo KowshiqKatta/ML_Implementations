@@ -85,3 +85,24 @@ imputed_values = np.random.choice(non_missing_values, size=len(missing_indices))
 df.loc[missing_indices, 'Fruit'] = imputed_values
 
 print(df)
+
+# proxy variable imputation
+
+data = {
+    'Fruit': ['Apple', 'Banana', 'Orange', 'Grapes', np.nan, 'Apple', 'Banana', 'Orange', np.nan, 'Mango'],
+    'Color': ['Red', 'Yellow', 'Orange', 'Green', 'Red', 'Red', 'Yellow', 'Orange', 'Green', 'Yellow']
+}
+
+df = pd.DataFrame(data)
+print(df.head())
+
+missing_indices = df[df['Fruit'].isnull()].index
+
+fruit_mode_by_color = df.groupby('Color')['Fruit'].agg(lambda x: x.mode().iloc[0])
+
+for idx in missing_indices:
+    color = df.loc[idx, 'Color']
+    imputed_fruit = fruit_mode_by_color[color]
+    df.loc[idx, 'Fruit'] = imputed_fruit
+
+print(df)
