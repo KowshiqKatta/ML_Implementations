@@ -27,3 +27,10 @@ imputer = SimpleImputer(strategy='most_frequent')
 df['transformed_value'] = imputer.fit_transform(df[['Value']])
 
 print(df)
+
+# constant imputation
+
+imputer = SimpleImputer(strategy='constant', fill_value=0)
+df['transformed_value'] = imputer.fit_transform(df[['Value']])
+
+print(df)
