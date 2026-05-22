@@ -64,3 +64,24 @@ df.loc[df['Value'] < P_low, 'transformed_value'] = P_low
 df.loc[df['Value'] > P_high, 'transformed_value'] = P_high
 
 print(df)
+
+# hot deck imputation
+
+data = {
+    'Fruit': ['Apple', 'Banana', 'Orange', 'Grapes', np.nan, 'Apple', 'Banana', 'Orange', np.nan, 'Mango']
+}
+
+df = pd.DataFrame(data)
+print(df.head())
+
+missing_indices = df[df['Fruit'].isnull()].index
+
+non_missing_values = df['Fruit'].dropna().values
+
+np.random.seed(42)
+
+imputed_values = np.random.choice(non_missing_values, size=len(missing_indices))
+
+df.loc[missing_indices, 'Fruit'] = imputed_values
+
+print(df)
