@@ -21,3 +21,9 @@ imputer = SimpleImputer(strategy='median')
 df['transformed_value'] = imputer.fit_transform(df[['Value']])
 
 print(df)
+
+# mode imputation
+imputer = SimpleImputer(strategy='most_frequent')
+df['transformed_value'] = imputer.fit_transform(df[['Value']])
+
+print(df)
