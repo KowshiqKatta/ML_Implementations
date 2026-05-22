@@ -34,3 +34,13 @@ imputer = SimpleImputer(strategy='constant', fill_value=0)
 df['transformed_value'] = imputer.fit_transform(df[['Value']])
 
 print(df)
+
+# forward fill imputation
+
+df['transformed_value'] = df['Value'].ffill()
+print(df)
+
+# backward fill imputation
+df['transformed_value'] = df['Value'].bfill()
+print(df)
+
