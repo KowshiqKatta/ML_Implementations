@@ -53,3 +53,14 @@ print(df)
 
 df['transformed_value'] = df['Value'].fillna(df['Value'].rolling(window=3, min_periods=1).mean())
 print(df)
+
+# end of distribution imputation
+
+P_low = df['Value'].quantile(0.1)
+P_high = df['Value'].quantile(0.9)
+
+df['transformed_value'] = df['Value'].fillna(df['Value'].median())
+df.loc[df['Value'] < P_low, 'transformed_value'] = P_low
+df.loc[df['Value'] > P_high, 'transformed_value'] = P_high
+
+print(df)
