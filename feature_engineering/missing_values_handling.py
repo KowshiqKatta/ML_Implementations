@@ -140,3 +140,34 @@ imputed_data = knn_imputer.fit_transform(df)
 
 df_imputed = pd.DataFrame(imputed_data, columns=df.columns)
 print(df_imputed)
+
+# regression imputation
+
+from sklearn.linear_model import LinearRegression
+from sklearn.impute import SimpleImputer
+
+def regression_imputation(df, target_column):
+    train_df = df[df[target_column].notna()]
+    test_df = df[df[target_column].isna()]
+
+    X_train = train_df.drop(columns = [target_column])
+    y_train = train_df[target_column]
+
+    X_test = test_df.drop(columns = [target_column])
+
+    imputer = SimpleImputer(strategy='mean')
+    X_train_imnputed = imputer.fit_transform(X_train)
+    X_test_imputed = imputer.transform(X_test)
+
+    model = LinearRegression()
+    model.fit(X_train_imnputed, y_train)
+
+    predicted_values = model.predict(X_test_imputed)
+    df.loc[df[target_column].isna(), target_column] = predicted_values
+
+    return df
+
+for column in df.columns:
+    df = regression_imputation(df, column)
+
+print(df)
