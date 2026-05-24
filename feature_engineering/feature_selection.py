@@ -27,3 +27,36 @@ print(selected_features)
 
 new_df = iris[selected_features]
 print(new_df.head())
+
+# chi-square test
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.preprocessing import KBinsDiscretizer
+
+data = load_breast_cancer()
+df = pd.DataFrame(data.data, columns = data.feature_names)
+df['target'] = data.target
+
+print(df)
+
+discretizer = KBinsDiscretizer(n_bins = 10, encode = 'ordinal', strategy = 'uniform')
+df_discretized = pd.DataFrame(discretizer.fit_transform(df.iloc[:, :-1]), columns = df.columns[:-1]) # chi square best works on categorical data, so we have to categorize the df
+
+print(df_discretized)
+
+df_discretized['target'] = df['target']
+
+X = df_discretized.drop('target', axis = 1)
+y = df_discretized['target']
+
+chi2_selector = SelectKBest(chi2, k = 10)
+X_kbest = chi2_selector.fit_transform(X, y)
+
+selected_features = X.columns[chi2_selector.get_support()]
+print(selected_features)
+
+new_df = df[selected_features]
+new_df['target'] = df['target']
+
+print(new_df)
