@@ -104,3 +104,32 @@ new_df = df[selected_features]
 new_df['target'] = df['target']
 
 print(new_df)
+
+# variance threshold technique
+
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns = iris.feature_names)
+df['target'] = iris.target
+
+print(df)
+
+variances = df.var()
+
+print(variances)
+
+from sklearn.feature_selection import VarianceThreshold
+
+X = df.drop('target', axis = 1)
+y = df['target']
+
+selector = VarianceThreshold(threshold = 0.2)
+X_transformed = selector.fit_transform(X)
+
+selected_features = X.columns[selector.get_support()]
+
+new_df = df[selected_features]
+new_df['target'] = df['target']
+
+print(new_df)
