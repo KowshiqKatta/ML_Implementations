@@ -60,3 +60,26 @@ new_df = df[selected_features]
 new_df['target'] = df['target']
 
 print(new_df)
+
+# ANOVA 
+
+from sklearn.feature_selection import f_classif
+
+data = load_breast_cancer()
+df = pd.DataFrame(data.data, columns = data.feature_names)
+df['target'] = data.target
+
+print(df)
+
+X = df.drop('target', axis = 1)
+y = df['target']
+
+anova_selector = SelectKBest(f_classif, k = 2) # select top 2 features
+X_kbest = anova_selector.fit_transform(X, y) 
+
+selected_features = X.columns[anova_selector.get_support()]
+
+new_df = df[selected_features]
+new_df['target'] = df['target']
+
+print(new_df)
