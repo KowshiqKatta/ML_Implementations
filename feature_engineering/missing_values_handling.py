@@ -171,3 +171,38 @@ for column in df.columns:
     df = regression_imputation(df, column)
 
 print(df)
+
+# missing indicators
+
+data = {
+    'A': [1, 2, np.nan, 4, 5],
+    'B': [3, np.nan, 5, np.nan, 7],
+    'C': [np.nan, 2, 3, 4, np.nan],
+    'D': [1, np.nan, 3, np.nan, 5]
+}
+
+df = pd.DataFrame(data)
+
+from sklearn.impute import MissingIndicator
+
+indicator = MissingIndicator()
+missing_indicators = indicator.fit_transform(df)
+
+missing_indicator_df = pd.DataFrame(missing_indicators, columns=[f'{col}_missing' for col in df.columns])
+
+print(missing_indicator_df)
+
+missing_indicator_df = missing_indicator_df.astype(int)
+print(missing_indicator_df)
+
+imputer = SimpleImputer(strategy='mean')
+
+imputed_data = imputer.fit_transform(df)
+
+df_imputed = pd.DataFrame(imputed_data, columns=df.columns)
+
+print(df_imputed)
+
+df_final = pd.concat([df_imputed, missing_indicator_df], axis=1)
+
+print(df_final)
